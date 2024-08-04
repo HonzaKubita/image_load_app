@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
 import 'package:flutter_map_polywidget/flutter_map_polywidget.dart';
 import 'package:image_load_app/app/router.dart';
 import 'package:latlong2/latlong.dart';
@@ -37,6 +38,9 @@ class HomeScreen extends StatelessWidget {
     // onPositionChanged: _onMapPositionChanged,
   );
 
+  final _mapTileProvider =
+      MbTilesTileProvider.fromPath(path: 'assets/map.mbtiles');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,26 +48,11 @@ class HomeScreen extends StatelessWidget {
       body: FlutterMap(
         options: _mapOptions,
         mapController: mapController,
-        children: [
-          PolyWidgetLayer(
-            polyWidgets: [
-              PolyWidget(
-                center: const LatLng(50.117769, 14.405368),
-                widthInMeters: 1000,
-                heightInMeters: 1000,
-                noRotation: true,
-                angle: -7.75,
-                constraints:
-                    const BoxConstraints.expand(width: 1000, height: 1000),
-                child: Image.asset('assets/backgrounds/mapBackground.png'),
-              ),
-            ],
-          ),
-        ],
+        children: [TileLayer(tileProvider: _mapTileProvider)],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.replaceRoute(OtherRoute());
+          context.navigateTo(OtherRoute());
         },
         child: const Icon(Icons.arrow_forward),
       ),

@@ -12,7 +12,7 @@ class OtherScreen extends StatelessWidget {
       extendBody: true,
       body: Center(
         child: ElevatedButton(
-            onPressed: () => {context.replaceRoute(HomeRoute())},
+            onPressed: () => {context.navigateTo(HomeRoute())},
             child: const Text('Go back')),
       ),
     );
